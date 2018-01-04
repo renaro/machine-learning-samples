@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity(), KmeanView.OnClicked {
     }
 
     override fun onClick(posX: Float, posY: Float) {
-        Toast.makeText(this, "PosX ={$posX} PosY ={$posY}", Toast.LENGTH_SHORT).show()
         board.addElement(Element(posX, posY))
     }
 
