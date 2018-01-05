@@ -15,5 +15,9 @@ class Kernel(var x: Float, var y: Float) {
         paint.setColor(Color.RED)
     }
 
+    override fun equals(other: Any?): Boolean {
+        return other != null && other is Kernel && other.x == this.x && other.y == this.y
+    }
+
 
 }
