@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
+    android:id="@+id/layout_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -46,7 +47,7 @@
         android:layout_marginTop="16dp">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/elementsRadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
@@ -54,7 +55,7 @@
             />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/kernelsRadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Kernels"
@@ -68,6 +69,9 @@
         android:layout_marginBottom="8dp"
         android:text="Run"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="148dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="8dp"/>
 
 </android.support.constraint.ConstraintLayout>
