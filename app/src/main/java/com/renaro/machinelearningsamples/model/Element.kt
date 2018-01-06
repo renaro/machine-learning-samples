@@ -11,7 +11,7 @@ import android.graphics.Point
 
 class Element(val x: Float, val y: Float) {
     val paint = Paint()
-    val RADIUS = 25F
+    val RADIUS = 28F
     var nearestKernel = Kernel(x, y)
 
     init {

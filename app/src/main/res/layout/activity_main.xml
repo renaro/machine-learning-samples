@@ -58,7 +58,7 @@
             android:id="@+id/kernelsRadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kernels"
+            android:text="Centroids"
             />
     </RadioGroup>
 

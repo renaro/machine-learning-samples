@@ -9,7 +9,7 @@ import android.graphics.Paint
 
 class Kernel(var x: Float, var y: Float) {
     val paint = Paint()
-    val RADIUS = 5f
+    val RADIUS = 10f
 
     init {
         paint.setColor(Color.RED)
