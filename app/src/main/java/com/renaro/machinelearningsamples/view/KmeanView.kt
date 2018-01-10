@@ -14,7 +14,7 @@ import com.renaro.machinelearningsamples.model.PredefinedColors
  * Created by renarosantos1 on 08/12/17.
  */
 class KmeanView(context: Context?, attributes: AttributeSet) : View(context, attributes) {
-    var listener: BoardInterface? = null
+    var listener: UserInterface? = null
     var elements = mutableListOf<Element>()
     var kernels = mutableListOf<Kernel>()
     val availableColors = PredefinedColors.values()
@@ -39,7 +39,7 @@ class KmeanView(context: Context?, attributes: AttributeSet) : View(context, att
     }
 
 
-    interface BoardInterface {
+    interface UserInterface {
         fun onClick(posX: Float, posY: Float)
         fun onError(message: String)
         fun nextStepIteration(iteration: Int)
@@ -63,13 +63,15 @@ class KmeanView(context: Context?, attributes: AttributeSet) : View(context, att
     }
 
     fun onRunClicked() {
-        if (kernels.size > elements.size) {
+        if(elements.isEmpty() || kernels.isEmpty()){
+            listener?.onError("Number of Data Points and Elements must not be 0")
+        } else if (kernels.size > elements.size) {
             listener?.onError("Number of Elements should be greater than Kernels")
         } else {
-            //one step I update the elements with the nearest kernel
+            //STEP 1 - update the elements with the nearest kernel
             if (step == 0 || step % 2 == 0) {
                 updateNearestKernel()
-                //the other step I move the kernels
+                //STEP 2
             } else {
                 val hasChanged = moveKernels()
                 //if the kernels hasn't changed, it is over!
