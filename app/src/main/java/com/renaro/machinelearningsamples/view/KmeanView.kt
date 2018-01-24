@@ -4,8 +4,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.View
-import com.renaro.machinelearningsamples.model.Element
 import com.renaro.machinelearningsamples.model.Kernel
 import com.renaro.machinelearningsamples.model.PredefinedColors
 
@@ -13,9 +11,8 @@ import com.renaro.machinelearningsamples.model.PredefinedColors
 /**
  * Created by renarosantos1 on 08/12/17.
  */
-class KmeanView(context: Context?, attributes: AttributeSet) : View(context, attributes) {
+class KmeanView(context: Context, attributes: AttributeSet) : ElementBoard(context, attributes) {
     var listener: UserInterface? = null
-    var elements = mutableListOf<Element>()
     var kernels = mutableListOf<Kernel>()
     val availableColors = PredefinedColors.values()
     private var step: Int = 0
@@ -30,9 +27,7 @@ class KmeanView(context: Context?, attributes: AttributeSet) : View(context, att
     }
 
     override fun onDraw(canvas: Canvas?) {
-        elements.forEach { element ->
-            canvas?.drawCircle(element.x, element.y, element.RADIUS, element.paint)
-        }
+        super.onDraw(canvas)
         kernels.forEach { kernel ->
             canvas?.drawCircle(kernel.x, kernel.y, kernel.RADIUS, kernel.paint)
         }
@@ -44,11 +39,6 @@ class KmeanView(context: Context?, attributes: AttributeSet) : View(context, att
         fun onError(message: String)
         fun nextStepIteration(iteration: Int)
         fun hasConverged()
-    }
-
-    fun addElement(element: Element) {
-        elements.add(element)
-        invalidate()
     }
 
     fun addKernel(kernel: Kernel) {
@@ -63,24 +53,28 @@ class KmeanView(context: Context?, attributes: AttributeSet) : View(context, att
     }
 
     fun onRunClicked() {
-        if(elements.isEmpty() || kernels.isEmpty()){
+        if (elements.isEmpty() || kernels.isEmpty()) {
             listener?.onError("Number of Data Points and Elements must not be 0")
         } else if (kernels.size > elements.size) {
             listener?.onError("Number of Elements should be greater than Kernels")
         } else {
-            //STEP 1 - update the elements with the nearest kernel
-            if (step == 0 || step % 2 == 0) {
-                updateNearestKernel()
-                //STEP 2
-            } else {
-                val hasChanged = moveKernels()
-                //if the kernels hasn't changed, it is over!
-                if (!hasChanged) {
-                    listener?.hasConverged()
-                }
-            }
-            listener?.nextStepIteration(++step)
+            runKmeans()
         }
+    }
+
+    private fun runKmeans() {
+        //STEP 1 - update the elements with the nearest kernel
+        if (step == 0 || step % 2 == 0) {
+            updateNearestKernel()
+            //STEP 2 - Calculate the new position of the kernels based on the mean of the elements
+        } else {
+            val hasChanged = moveKernels()
+            //if the kernels hasn't changed, it is over!
+            if (!hasChanged) {
+                listener?.hasConverged()
+            }
+        }
+        listener?.nextStepIteration(++step)
     }
 
     private fun moveKernels(): Boolean {
@@ -112,7 +106,7 @@ class KmeanView(context: Context?, attributes: AttributeSet) : View(context, att
         invalidate()
     }
 
-    fun resetBoard() {
+    override fun resetBoard() {
         step = 0
         listener?.nextStepIteration(step)
         elements.clear()
