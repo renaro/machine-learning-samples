@@ -31,7 +31,17 @@ class LinearRegressionView(context: Context, attributes: AttributeSet) : Element
     }
 
     fun runClicked() {
-        
+        var sumx = 0.0
+        var sumy = 0.0
+        var sumx2 = 0.0
+        elements.forEach{ element ->
+            sumx  += element.x
+            sumx2 += (element.x * element.x)
+            sumy  += element.y
+        }
+        val xbar = sumx / elements.size
+        val ybar = sumy /  elements.size
+
     }
 
 }
